@@ -1,0 +1,5 @@
+interface:
+  display_name: "Format Doc"
+  short_description: "Sync architecture and code docs after code changes"
+  default_prompt: "Use $format-doc to synchronize ARCHITECTURE.md, affected INDEX.md files, and file headers from this code diff."
+
