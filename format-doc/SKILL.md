@@ -49,6 +49,7 @@ Do not update headers or indexes for:
 
 Common ignore examples:
 `.git/`, `node_modules/`, `dist/`, `build/`, `target/`, `coverage/`, `vendor/`, `.next/`, `out/`.
+Hidden folders (names starting with `.`) are ignored by default unless explicitly included in custom tooling.
 
 ## Required Formats
 
@@ -203,6 +204,34 @@ For repositories not ready for full three-tier enforcement yet, temporarily use:
 ```bash
 python format-doc/scripts/check_format_doc.py --root . --allow-missing-architecture
 ```
+
+## Built-in Bootstrap Script
+
+Use `scripts/bootstrap_format_doc.py` when onboarding an existing project with missing docs.
+This script initializes headers, folder indexes, and architecture docs in one run.
+
+Common commands:
+
+```bash
+# Bootstrap full repository docs (auto language: user/project preference, else Chinese)
+python format-doc/scripts/bootstrap_format_doc.py --root .
+
+# Force Chinese or English output
+python format-doc/scripts/bootstrap_format_doc.py --root . --language zh
+python format-doc/scripts/bootstrap_format_doc.py --root . --language en
+
+# Preview only (no file writes)
+python format-doc/scripts/bootstrap_format_doc.py --root . --dry-run
+
+# Keep existing docs unchanged, only create missing ones
+python format-doc/scripts/bootstrap_format_doc.py --root . --preserve-existing-index --preserve-existing-architecture
+```
+
+Recommended first-time adoption flow:
+
+1. Run `bootstrap_format_doc.py` once on the target repository.
+2. Run `check_format_doc.py` to verify consistency.
+3. Switch to incremental maintenance per change after bootstrap.
 
 ## Decision Guardrails
 

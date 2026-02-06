@@ -160,7 +160,9 @@ def collect_source_files(
 ) -> list[Path]:
     source_files: list[Path] = []
     for current_dir, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in ignored_dirs]
+        dirnames[:] = [
+            name for name in dirnames if name not in ignored_dirs and not name.startswith(".")
+        ]
         base = Path(current_dir)
         for filename in filenames:
             path = base / filename
@@ -219,7 +221,10 @@ def collect_target_files(
             continue
         if path.suffix.lower() not in extensions:
             continue
-        if any(part in ignored_dirs for part in path.relative_to(root).parts):
+        if any(
+            part in ignored_dirs or part.startswith(".")
+            for part in path.relative_to(root).parts
+        ):
             continue
         results.append(path)
     return results
@@ -267,7 +272,7 @@ def parse_index_entries(index_file: Path) -> set[str]:
         lower = first.lower()
         if not first:
             continue
-        if lower in {"file", "---", "------"}:
+        if lower in {"file", "files", "文件", "---", "------"}:
             continue
         if set(first) <= {"-", ":"}:
             continue
@@ -443,4 +448,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
