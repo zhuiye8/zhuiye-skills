@@ -1,0 +1,21 @@
+{
+  "name": "zhuiye-skills",
+  "owner": {
+    "name": "zhuiye8"
+  },
+  "metadata": {
+    "description": "zhuiye8 的 Claude Code skill 合集",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "format-doc",
+      "description": "Deterministic documentation formatting and synchronization for code changes. Maintains ARCHITECTURE.md, folder INDEX.md files, and file-level header comments.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/format-doc"
+      ]
+    }
+  ]
+}
